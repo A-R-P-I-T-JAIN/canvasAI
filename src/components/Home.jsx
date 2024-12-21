@@ -142,6 +142,9 @@ const Home = () => {
         </div>
       </div>
       <Enter />
+      <footer className="w-full bg-gray-800 text-white py-4 text-center">
+        <p>DoodleSense. Made with ❤</p>
+      </footer>
     </div>
   );
 };
