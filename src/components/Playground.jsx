@@ -23,7 +23,7 @@ const Playground = () => {
   const [isAsking, setIsAsking] = useState(false); // New state for "Ask AI" button loading state
   const { isMobile } = useDevice(); // Using the useDevice hook
 
-  const { isSignedIn } = useUser();
+  // const { isSignedIn } = useUser();
 
   const sendImageToBackend = async (blob) => {
     const formData = new FormData();
@@ -31,8 +31,8 @@ const Playground = () => {
 
     try {
       const response = await fetch(
-        "https://doodlesense.onrender.com/calculate",
-        // "http://localhost:4000/calculate",
+        // "https://doodlesense.onrender.com/calculate",
+        "http://localhost:4000/calculate",
         {
           method: "POST",
           body: formData,
@@ -134,8 +134,8 @@ const Playground = () => {
     setLoading(true); // Set loading to true
     try {
       const response = await fetch(
-        "https://doodlesense.onrender.com/generate",
-        // "http://localhost:4000/generate",
+        // "https://doodlesense.onrender.com/generate",
+        "http://localhost:4000/generate",
         {
           method: "POST",
           headers: {
@@ -187,40 +187,38 @@ const Playground = () => {
 
   const MobileFooter = () => {
     const device = useDevice();
-    const inputRef = useRef(null); // Create a reference for the input field
+    const inputRef = useRef(null);
   
-    // Focus the input field whenever the component renders
     useEffect(() => {
       if (inputRef.current) {
-        inputRef.current.focus(); // Programmatically set focus on the input field
+        inputRef.current.focus();
       }
-    }, [text]); // Re-focus when the text changes
+    }, [text]);
   
     if (device.editor.isMobile) {
       return (
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 w-full">
           <input
             type="text"
-            ref={inputRef} // Attach the ref to the input field
-            className="h-10 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 px-2 py-1 text-black"
-            style={{
-              border: "2px solid white",
-            }}
+            ref={inputRef}
+            className="h-10 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 px-4 py-2 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-teal-400 transition-all duration-300"
             placeholder="ex. a red car"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
           <button
-            className="bg-blue-200 p-2 text-black font-semibold w-full sm:w-auto"
+            className="group relative px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-medium hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 shadow-lg shadow-teal-500/25"
             onClick={handleGenerate}
           >
-            {loading ? "Loading..." : "Generate with AI"}
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span className="relative">{loading ? "Loading..." : "Generate with AI"}</span>
           </button>
           <button
-            className="bg-blue-200 p-2 text-black font-semibold w-full sm:w-auto"
+            className="group relative px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg shadow-purple-500/25"
             onClick={handleButtonClick}
           >
-            {isAsking ? "Asking..." : "Ask AI"}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span className="relative">{isAsking ? "Asking..." : "Ask AI"}</span>
           </button>
         </div>
       );
@@ -230,26 +228,8 @@ const Playground = () => {
 
   return (
     <>
-      <div className="custom-styles h-screen bg-black flex flex-col items-center justify-center">
-        <div className="bg-black head w-full h-10 flex items-center justify-between px-4" >
-        <h1 onClick={() => navigate("/")} className="text-xl sm:text-2xl md:text-3xl text-white cursor-pointer">DoodleSense</h1>
-        <div>
-          {isSignedIn ? (
-            <div className="pt-2" >
-            <UserButton />
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <SignInButton>
-                <button className="text-xs sm:text-sm md:text-base lg:text-lg text-white bg-blue-500 px-2 sm:px-3 py-1 rounded">Sign In</button>
-              </SignInButton>
-              <SignUpButton>
-                <button className="text-xs sm:text-sm md:text-base lg:text-lg text-white bg-green-500 px-2 sm:px-3 py-1 rounded">Register</button>
-              </SignUpButton>
-            </div>
-          )}
-        </div>
-        </div>
+      <div className="custom-styles h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex flex-col items-center">
+        {/* <Nav /> */}
         <Excalidraw
           excalidrawAPI={(api) => setExcalidrawApi(api)}
           theme="dark"
@@ -258,11 +238,11 @@ const Playground = () => {
             if (!device.editor.isMobile) {
               return (
                 <button
-                  className="bg-blue-200 px-2 py-1 text-black font-semibold sm:text-sm md:text-base lg:text-lg"
+                  className="group relative px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg shadow-purple-500/25"
                   onClick={handleButtonClick}
                 >
-                  {isAsking ? "Asking..." : "Ask AI"}{" "}
-                  {/* Button text based on the isAsking state */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative">{isAsking ? "Asking..." : "Ask AI"}</span>
                 </button>
               );
             }
@@ -282,19 +262,17 @@ const Playground = () => {
               <div className="flex flex-col sm:flex-row justify-center items-center gap-4 px-4 w-full">
                 <input
                   type="text"
-                  className="h-10 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 px-2 py-1 text-black"
-                  style={{
-                    border: "2px solid white",
-                  }}
+                  className="h-10 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 px-4 py-2 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-teal-400 transition-all duration-300"
                   placeholder="ex. a red car"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                 />
                 <button
-                  className="bg-blue-200 p-2 text-black font-semibold w-full sm:w-auto"
+                  className="group relative px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-medium hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 shadow-lg shadow-teal-500/25"
                   onClick={handleGenerate}
                 >
-                  {loading ? "Loading..." : "Generate with AI"}
+                  <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative">{loading ? "Loading..." : "Generate with AI"}</span>
                 </button>
               </div>
             </Footer>
@@ -312,6 +290,7 @@ const Playground = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        theme="dark"
       />
     </>
   );

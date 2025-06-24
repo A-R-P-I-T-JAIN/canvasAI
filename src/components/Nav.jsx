@@ -1,28 +1,34 @@
-import { UserButton, useUser, SignInButton, SignUpButton } from '@clerk/clerk-react';
 import React from 'react';
+import { Brain, Sparkles } from 'lucide-react';
 
 const Nav = () => {
-  const { isSignedIn } = useUser();
-
   return (
-    <div className="w-full flex justify-center items-center z-50">
-      <div className="qwe w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] h-10 absolute top-4 rounded-md flex items-center justify-between px-4">
-        <h1 className="text-xl sm:text-2xl md:text-3xl text-white">DoodleSense</h1>
-        <div>
-          {isSignedIn ? (
-            <div className="pt-1" >
-            <UserButton />
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <SignInButton>
-                <button className="text-xs sm:text-sm md:text-base lg:text-lg text-white bg-blue-500 px-2 sm:px-3 py-1 rounded">Sign In</button>
-              </SignInButton>
-              <SignUpButton>
-                <button className="text-xs sm:text-sm md:text-base lg:text-lg text-white bg-green-500 px-2 sm:px-3 py-1 rounded">Register</button>
-              </SignUpButton>
-            </div>
-          )}
+    <div className="w-full flex justify-center items-center z-50 relative">
+      <div className="w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] absolute top-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl flex items-center justify-between px-6 py-3 shadow-xl shadow-black/20">
+        
+        {/* Logo Section */}
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-teal-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center relative overflow-hidden">
+            <Brain className="text-white z-10" size={20} />
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-purple-600 opacity-80"></div>
+          </div>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-purple-400 to-pink-400">
+              Doodle
+            </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-500">
+              Sense
+            </span>
+          </h1>
+        </div>
+
+        {/* Navigation Actions */}
+        <div className="flex items-center space-x-3">
+          {/* AI Features Badge */}
+          <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-full">
+            <Sparkles className="text-purple-400" size={14} />
+            <span className="text-purple-300 text-xs font-medium">AI Powered</span>
+          </div>
         </div>
       </div>
     </div>

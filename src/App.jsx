@@ -3,7 +3,6 @@ import Playground from "./components/Playground";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Home from "./components/Home";
 import SignInOut from './components/SignInOut';
-import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 
 function App() {
   return (
